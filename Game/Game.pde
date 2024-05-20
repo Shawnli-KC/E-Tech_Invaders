@@ -1,6 +1,8 @@
 /* Game Class Starter File
  * Authors: Zachary Zhuo
  * Last Edit: 5/13/2024
+ * Authors: Sheanleigh Ken Cajote
+ * Last Edit: 5/20/2024
  */
 
 //import processing.sound.*;
@@ -29,6 +31,9 @@ PImage player1;
 String player1File = "images/zaptos.png";
 int player1Row = 2;
 int health = 3;
+String player1File = "images/Red.png";
+int player1Row = 6;
+int health = 10;
 
 PImage enemy;
 AnimatedSprite enemySprite;
@@ -66,6 +71,7 @@ void setup() {
   //setup the screens/worlds/grids in the Game
   splashScreen = new Screen("splash", splashBg);
   mainGrid = new Grid("sky", mainBg, 6, 15);
+  mainGrid = new Grid("Sky", mainBg, 10, 10);
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
 
