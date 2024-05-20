@@ -1,6 +1,6 @@
 /* Game Class Starter File
- * Authors: Joel A. Bianchi
- * Last Edit: 5/13/2024
+ * Authors: Sheanleigh Ken Cajote
+ * Last Edit: 5/20/2024
  */
 
 //import processing.sound.*;
@@ -22,13 +22,13 @@ PImage splashBg;
 
 //Sky Screen Variables
 Grid mainGrid;
-String mainBgFile = "images/chess.jpg";
+String mainBgFile = "images/Sky.jpg";
 PImage mainBg;
 
 PImage player1;
-String player1File = "images/x_wood.png";
-int player1Row = 3;
-int health = 3;
+String player1File = "images/Red.png";
+int player1Row = 6;
+int health = 10;
 
 PImage enemy;
 AnimatedSprite enemySprite;
@@ -65,7 +65,7 @@ void setup() {
 
   //setup the screens/worlds/grids in the Game
   splashScreen = new Screen("splash", splashBg);
-  mainGrid = new Grid("chessBoard", mainBg, 6, 8);
+  mainGrid = new Grid("Sky", mainBg, 10, 10);
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
 
