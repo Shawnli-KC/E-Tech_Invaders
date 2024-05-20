@@ -1,5 +1,5 @@
 /* Game Class Starter File
- * Authors: Joel A. Bianchi
+ * Authors: Zachary Zhuo
  * Last Edit: 5/13/2024
  */
 
@@ -22,12 +22,12 @@ PImage splashBg;
 
 //Sky Screen Variables
 Grid mainGrid;
-String mainBgFile = "images/chess.jpg";
+String mainBgFile = "images/sky.png";
 PImage mainBg;
 
 PImage player1;
-String player1File = "images/x_wood.png";
-int player1Row = 3;
+String player1File = "images/zaptos.png";
+int player1Row = 2;
 int health = 3;
 
 PImage enemy;
@@ -65,7 +65,7 @@ void setup() {
 
   //setup the screens/worlds/grids in the Game
   splashScreen = new Screen("splash", splashBg);
-  mainGrid = new Grid("chessBoard", mainBg, 6, 8);
+  mainGrid = new Grid("sky", mainBg, 6, 15);
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
 
@@ -197,7 +197,7 @@ public void updateScreen(){
     currentGrid = mainGrid;
 
     //Display the Player1 image
-    GridLocation player1Loc = new GridLocation(player1Row,0);
+    GridLocation player1Loc = new GridLocation(player1Row,7);
     mainGrid.setTileImage(player1Loc, player1);
       
     //update other screen elements
