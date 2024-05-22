@@ -1,6 +1,6 @@
 /* Game Class Starter File
  * Authors: Zachary Zhuo & Sheanleigh Ken Cajote
- * Last Edit: 5/22/2024
+ * Last Edit: 5/20/2024
  */
 
 //import processing.sound.*;
@@ -24,7 +24,7 @@ PImage splashBg;
 
 //Level1 Screen Variables
 Grid mainGrid;
-String mainBgFile = "images/sky.png";
+String mainBgFile = "images/MC.jpg";
 PImage mainBg;
 
 PImage player1;
