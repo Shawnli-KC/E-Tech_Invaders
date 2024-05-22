@@ -126,7 +126,7 @@ void keyPressed(){
   //What to do when a key is pressed?
   
   //set [W] key to move the player1 up & avoid Out-of-Bounds errors
-  if(keyCode == 87){
+  if(key == 87){
    
     //Store old GridLocation
     GridLocation oldLoc = new GridLocation(player1Row, 0);
