@@ -36,7 +36,7 @@ AnimatedSprite enemySprite;
 //Level2 Pixel-based-Screen Variables
 World level2World;
 PImage level2Bg;
-String level2BgFile = "images/sky.jpg";
+String level2BgFile = "images/Sky.jpg";
 
 // Sprite player2;   //Use PImage to display the image in a GridLocation
 // String player2File = "images/zapdos.png";
