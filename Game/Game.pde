@@ -11,6 +11,9 @@
 String titleText = "Minecraft Shoota";
 String extraText = "Are You Ready?";
 
+//VARIABLES: Whole Game
+AnimatedSprite runningHorse;
+boolean doAnimation;
 
 //Splash Screen 
 Screen splashScreen;
@@ -123,12 +126,7 @@ PImage endBg;
 String endBgFile = "images/JAB.png";
 
 
-//Whole Game Variables
-AnimatedSprite exampleSprite;
-boolean doAnimation;
-
-
-//Variables to track the current Screen being displayed
+//VARIABLES: Tracking the current Screen being displayed
 Screen currentScreen;
 World currentWorld;
 Grid currentGrid;
@@ -143,10 +141,10 @@ void setup() {
   //Match the screen size to the background image size
   size(900,900);
   
-  //Set the title on the title bar
+  //SETUP: Set the title on the title bar
   surface.setTitle(titleText);
 
-  //Load BG images used in all screens
+  //SETUP: Load BG images used in all screens
   splashBg = loadImage(splashBgFile);
   splashBg.resize(900,900);
   level1Bg = loadImage(level1BgFile);
@@ -156,8 +154,7 @@ void setup() {
   endBg = loadImage(endBgFile);
   endBg.resize(900,900);  //------------------ OTHER GRID METHODS --------------------//
 
-
-  //setup the screens/worlds/grids in the Game
+  //SETUP: Screens, Worlds, Grids
   splashScreen = new Screen("splash", splashBg);
   level1Grid = new Grid("Plains", level1Bg, 10, 10);
   level2Grid = new Grid("Forest", level2Bg, 10, 10);   //simple World construtor
@@ -169,7 +166,10 @@ void setup() {
   endScreen = new World("Ending", endBg);
   currentScreen = splashScreen;
 
-  //Level 1 Image Setup - GRID  
+  //SETUP: All Game objects
+  runningHorse = new AnimatedSprite("sprites/horse_run.png", "sprites/horse_run.json", 50.0, 75.0, 10.0);
+
+  //SETUP: Level 1
   player1 = loadImage(player1File);
   player1.resize(level1Grid.getTileWidthPixels(),level1Grid.getTileHeightPixels());
 
@@ -182,25 +182,22 @@ void setup() {
   //level1Grid.printSprites();
   System.out.println("Done adding sprites to level 1..");
   
-  //LEVEL 2 SPRITE SETUP - WORLD
-  //player2 = new Sprite(player2File, 0.25);
+  //SETUP: Level 2
+  // player2 = new Sprite(player2File, 0.25);
   //player2.moveTo(player2startX, player2startY);
-  // enemy = loadImage("images/articuno.png");
-  // enemy.resize(100,100);
-
+  // level2World.addSpriteCopyTo(runningHorse, 100, 200);  //example Sprite added to a World at a location, with a speed
+  // level2World.printWorldSprites();
+  System.out.println("Done loading Level 2 ...");
   
-  //Other Setup
-  exampleAnimationSetup();
-
+  //SETUP: Sound
   // Load a soundfile from the /data folder of the sketch and play it back
   // song = new SoundFile(this, "sounds/Lenny_Kravitz_Fly_Away.mp3");
   // song.play();
   
-  imageMode(CORNER);    //Set Images to read coordinates at corners
-  //fullScreen();   //only use if not using a specfic bg image
   println("Game started...");
 
 } //end setup()
+
 
 //Required Processing method that automatically loops
 //(Anything drawn on the screen should be called from here)
@@ -232,7 +229,7 @@ void draw() {
 void keyPressed(){
 
   //check what key was pressed
-  System.out.println("Key pressed: " + key); //keyCode gives you an integer for the key
+  System.out.println("\nKey pressed: " + keyCode); //key gives you a character for the key pressed
 
   //What to do when a key is pressed?
   
@@ -271,7 +268,7 @@ void keyPressed(){
 void mouseClicked(){
   
   //check if click was successful
-  System.out.println("Mouse was clicked at (" + mouseX + "," + mouseY + ")");
+  System.out.println("\nMouse was clicked at (" + mouseX + "," + mouseY + ")");
   if(currentGrid != null){
     System.out.println("Grid location: " + currentGrid.getGridLocation());
   }
@@ -308,34 +305,37 @@ public void updateTitleBar(){
 //method to update what is drawn on the screen each frame
 public void updateScreen(){
 
-  //Update the Background of the current Screen
+  //UPDATE: Background of the current Screen
   if(currentScreen.getBg() != null){
     background(currentScreen.getBg());
   }
 
-  //splashScreen update
-  if(splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
+  //UPDATE: splashScreen
+  if(currentScreen == splashScreen && splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
+    System.out.print("s");
     currentScreen = level1Grid;
   }
 
-  //level1Grid Screen Updates
+  //UPDATE: level1Grid Screen
   if(currentScreen == level1Grid){
+    System.out.print("1");
+    currentGrid = level1Grid;
 
     //Display the Player1 image
     GridLocation player1Loc = new GridLocation(player1Row,0);
     level1Grid.setTileImage(player1Loc, player1);
-      
+    
     //update other screen elements
-    level1Grid.showSprites();
-    level1Grid.showImages();
+    level1Grid.showGridImages();
     level1Grid.showGridSprites();
+    level1Grid.showWorldSprites();
 
     //move to next level based on a button click
     b1.show();
     if(b1.isClicked()){
       currentScreen = level2Grid;
     }
-    
+  
   }
 
   //level2Grid Updates
@@ -345,13 +345,29 @@ public void updateScreen(){
     level2Grid.moveBgXY(-3.0, 0);
     level2Grid.show();
 
-    //player2.show();
+    // player2.show();
 
+    level2World.showWorldSprites();
 
   }
 
-  //Updtes for any Screen
-  checkExampleAnimation();
+  //UPDATE: End Screen
+  // if(currentScreen == endScreen){
+
+  // }
+
+  //UPDATE: Any Screen
+  if(doAnimation){
+    runningHorse.animateHorizontal(5.0, 10.0, true);
+  }
+
+
+}
+
+//Update Screen
+if(doAnimation){
+    runningHorse.animateHorizontal(5.0, 10.0, true);
+  }
 
 
 }
@@ -454,19 +470,4 @@ public void endGame(){
     //Show any end imagery
     currentScreen = endScreen;
 
-}
-
-//example method that creates 1 horse run along the screen
-public void exampleAnimationSetup(){  
-  int i = 2;
-  exampleSprite = new AnimatedSprite("sprites/horse_run.png", "sprites/horse_run.json", 50.0, i*75.0);
-  //exampleSprite.resize(200,200);
-}
-
-//example method that animates the horse Sprites
-public void checkExampleAnimation(){
-  if(doAnimation){
-    exampleSprite.animateHorizontal(5.0, 10.0, true);
-    //System.out.println("animating!");
-  }
 }
