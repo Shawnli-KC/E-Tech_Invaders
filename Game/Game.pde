@@ -8,46 +8,119 @@
 //------------------ GAME VARIABLES --------------------//
 
 //Title Bar
-String titleText = "HorseChess";
-String extraText = "Who's Turn?";
+String titleText = "Minecraft Shoota";
+String extraText = "Are You Ready?";
 
 
-//Splash Screen Variables
+//Splash Screen 
 Screen splashScreen;
 PImage splashBg;
-String splashBgFile = "images/apcsa.png";
-//SoundFile song;
+String splashBgFile = "images/MC.png";
+
+//Music
 
 
-//Level1 Grid-Screen Variables
+//Level1 
 Grid level1Grid;
 PImage level1Bg;
-String level1BgFile = "images/MC.jpg";
+String level1BgFile = "images/L1.png";
 
+//Player
 PImage player1;   //Use PImage to display the image in a GridLocation
-String player1File = "images/Red.png";
-int player1Row = 6;
+String player1File = "images/Steve.png";
+int player1Row = 5;
 int player1Col = 0;
 int health = 10;
-Button b1 = new Button("rect", 400, 500, 100, 50, "GoToLevel2");
-AnimatedSprite enemySprite;
 
+//Enemy
+PImage enemy1;
+String enemyFile1 = "images/Creeper.png";
+
+//Button
+Button b1 = new Button("rect", 780, 780, 100, 100, "Go To Level 2");
 
 //Level2 Pixel-based-Screen Variables
-World level2World;
+Grid level2Grid;
 PImage level2Bg;
-String level2BgFile = "images/sky.jpg";
+String level2BgFile = "images/L2.png";
+
+PImage player2;   //Use PImage to display the image in a GridLocation
+String player2File = "images/Steve.png";
+int player2Row = 5;
+int player2Col = 0;
+
+Button b2 = new Button("rect", 780, 780, 100, 100, "Go To Level 3");
+
 
 // Sprite player2;   //Use PImage to display the image in a GridLocation
 // String player2File = "images/zapdos.png";
 // int player2startX = 50;
 // int player2startY = 300;
 
+//Level 3
+Grid level3Grid;
+PImage level3Bg;
+String level3BgFile = "images/L3.png";
 
-//EndScreen variables
+PImage player3;   //Use PImage to display the image in a GridLocation
+String player3File = "images/Steve.png";
+int player3Row = 5;
+int player3Col = 0;
+
+Button b3 = new Button("rect", 780, 780, 100, 100, "Go To Level 4");
+
+//Level 4
+Grid level4World;
+PImage level4Bg;
+String level4BgFile = "images/L4.png";
+
+PImage player4;   //Use PImage to display the image in a GridLocation
+String player4File = "images/Steve.png";
+int player4Row = 5;
+int player4Col = 0;
+
+Button b4 = new Button("rect", 780, 780, 100, 100, "Go To Level 5");
+
+//Level 5
+Grid level5World;
+PImage level5Bg;
+String level5BgFile = "images/L5.png";
+
+PImage player5;   //Use PImage to display the image in a GridLocation
+String player5File = "images/Steve.png";
+int player5Row = 5;
+int player5Col = 0;
+
+Button b5 = new Button("rect", 780, 780, 100, 100, "Go To Level 6");
+
+//Level 6
+Grid level6World;
+PImage level6Bg;
+String level6BgFile = "images/L6.png";
+
+PImage player6;   //Use PImage to display the image in a GridLocation
+String player6File = "images/Steve.png";
+int player6Row = 5;
+int player6Col = 0;
+
+Button b6 = new Button("rect", 780, 780, 100, 100, "Go To Level 7");
+
+//Level 7
+Grid level7World;
+PImage level7Bg;
+String level7BgFile = "images/L7.png";
+
+PImage player7;   //Use PImage to display the image in a GridLocation
+String player7File = "images/Steve.png";
+int player7Row = 5;
+int player7Col = 0;
+
+Button b7 = new Button("rect", 780, 780, 100, 100, "Congrats!");
+
+//Ending Screen
 World endScreen;
 PImage endBg;
-String endBgFile = "images/youwin.png";
+String endBgFile = "images/JAB.png";
 
 
 //Whole Game Variables
@@ -68,28 +141,32 @@ private int msElapsed = 0;
 void setup() {
 
   //Match the screen size to the background image size
-  size(800,600);
+  size(900,900);
   
   //Set the title on the title bar
   surface.setTitle(titleText);
 
   //Load BG images used in all screens
   splashBg = loadImage(splashBgFile);
-  splashBg.resize(800,600);
+  splashBg.resize(900,900);
   level1Bg = loadImage(level1BgFile);
-  level1Bg.resize(800,600);
+  level1Bg.resize(900,900);
   level2Bg = loadImage(level2BgFile);
-  level2Bg.resize(800,600);
+  level2Bg.resize(900,900);
   endBg = loadImage(endBgFile);
-  endBg.resize(800,600);  //------------------ OTHER GRID METHODS --------------------//
+  endBg.resize(900,900);  //------------------ OTHER GRID METHODS --------------------//
 
 
   //setup the screens/worlds/grids in the Game
   splashScreen = new Screen("splash", splashBg);
-  level1Grid = new Grid("sky", level1Bg, 10, 10);
-  //level2World = new World("sky", level2BgFile, 8.0, 0, 0); //moveable World constructor --> defines center & scale (x, scale, y)???
-  //level2World = new World("sky", level2Bg);   //simple World construtor
-  endScreen = new World("end", endBg);
+  level1Grid = new Grid("Plains", level1Bg, 10, 10);
+  level2Grid = new Grid("Forest", level2Bg, 10, 10);   //simple World construtor
+  //level3Grid = new Grid("Desert", level3Bg, 10, 10);
+  //level4Grid = new Grid("Ocean", level4Bg, 10, 10);
+  //level5Grid = new Grid("Artic", level5Bg, 10, 10);
+  //level6Grid = new Grid("Nether", level6Bg, 10, 10);
+  //level7Grid = new Grid("End", level7Bg, 10, 10);
+  endScreen = new World("Ending", endBg);
   currentScreen = splashScreen;
 
   //Level 1 Image Setup - GRID  
@@ -98,7 +175,11 @@ void setup() {
 
   //Adding pixel-based Animated Sprites to the world
   // level1Grid.addSpriteCopyTo(exampleSprite);
-  level1Grid.printSprites();
+  //enemy1 = loadImage(enemyFile1);
+  //enemy1.resize(level1Grid.getTileWidth(),level1Grid.getTileHeight());
+  //walkingChick = new AnimatedSprite("sprites/chick_walk.png", "sprites/chick_walk.json", 0.0, 0.0, 5.0);
+  //level1Grid.setTileSprite(new GridLocation (5,5), walkingChick);
+  //level1Grid.printSprites();
   System.out.println("Done adding sprites to level 1..");
   
   //LEVEL 2 SPRITE SETUP - WORLD
@@ -180,7 +261,7 @@ void keyPressed(){
   if(key == '1'){
     currentScreen = level1Grid;
   } else if(key == '2'){
-    currentScreen = level2World;
+    currentScreen = level2Grid;
   }
 
 
@@ -252,17 +333,17 @@ public void updateScreen(){
     //move to next level based on a button click
     b1.show();
     if(b1.isClicked()){
-      //currentScreen = level2World;
+      currentScreen = level2Grid;
     }
     
   }
 
-  //level2World Updates
-  else if(currentScreen == level2World){
-    currentWorld = level2World;
+  //level2Grid Updates
+  else if(currentScreen == level2Grid){
+    currentWorld = level2Grid;
     
-    level2World.moveBgXY(-3.0, 0);
-    level2World.show();
+    level2Grid.moveBgXY(-3.0, 0);
+    level2Grid.show();
 
     //player2.show();
 
@@ -275,49 +356,62 @@ public void updateScreen(){
 
 }
 
+//Update Screen
+if(doAnimation){
+    runningHorse.animateHorizontal(5.0, 10.0, true);
+  }
+
+
+}
+
 //Method to populate enemies or other sprites on the screen
 public void populateSprites(){
 
   //What is the index for the last column?
-  
+  int lastCol = level1Grid.getNumCols() -1; 
 
   //Loop through all the rows in the last column
+  for(int r=0; r<level1Grid.getNumRows(); r++){
+
+    GridLocation loc = new GridLocation(r, lastCol);
 
     //Generate a random number
-
+    double rando = Math.random();
 
     //10% of the time, decide to add an enemy image to a Tile
-    
+    if(rando < 0.1){
+      level1Grid.setTileImage(loc, enemy1);
+      System.out.println("Adding Creeper to " + loc);
+    }
+
+  }
 
 }
-
+    
 //Method to move around the enemies/sprites on the screen
 public void moveSprites(){
 
 //Loop through all of the rows & cols in the grid
+for(int r=0; r<level1Grid.getNumRows(); r++){
+  for(int c=0; c<level1Grid.getNumCols(); c++){
 
-      //Store the current GridLocation
+    GridLocation loc = new GridLocation(r,c);
 
-      //Store the next GridLocation
+    //check for enemy creeper at the loc
+    if(level1Grid.getTileImage(loc) == enemy1 ){
 
-      //Check if the current tile has an image that is not player1      
-
-
-        //Get image/sprite from current location
-          
-
-        //CASE 1: Collision with player1
-
-
-        //CASE 2: Move enemy over to new location
-
-
-        //Erase image/sprite from old location
-
-        //System.out.println(loc + " " + grid.hasTileImage(loc));
-
-          
-      //CASE 3: Enemy leaves screen at first column
+      //erase creeper from current loc
+      level1Grid.clearTileImage(loc);
+      
+      //only move if it's a legal col
+      if( c >= 1){
+        //add creeper to loc to left
+        GridLocation leftLoc = new GridLocation(r, c-1);
+        level1Grid.setTileImage(leftLoc, enemy1);
+        //System.out.println("moving creeper");
+      }
+    }
+  }
 
 }
 

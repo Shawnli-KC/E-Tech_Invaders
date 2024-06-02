@@ -30,9 +30,9 @@ public class Button {
         this.shapeY = y + (shapeH/2);
         
         this.caption = txt;
-        this.baseColor = color(255,255, 0);   //yellow
+        this.baseColor = color(255, 255, 255);   //yellow
         this.highlightColor = color(0,0,255); //blue
-        this.clickColor = color(255,0,0); //red
+        this.clickColor = color(0,0,0); //red
         this.currentColor = baseColor;
         this.visible = true;
     }
