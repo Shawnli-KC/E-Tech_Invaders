@@ -43,18 +43,40 @@ AnimatedSprite walkingChick;
 Button b1 = new Button("rect", 1800, 925, 100, 100, "Go To Level 2");
 
 //Level 2 Pixel-based Screen
-World level2World;
+Grid level2Grid;
 PImage level2Bg;
 String level2BgFile = "images/L6.png";
-Sprite player2; //Use Sprite for a pixel-based Location
-String player2File = "images/JAB.png";
-int player2startX = 50;
-int player2startY = 50;
+
+PImage player2; 
+String player2File = "images/Steve.png";
+int player2Row = 10;
+int player2Col = 0;
+
+PImage enemy2;
+String enemyFile2 = "images/Wither.png";
+
+Button b2 = new Button("rect", 1800, 925, 100, 100, "Go To Level 3");
+
+//Level 3
+Grid level3Grid;
+PImage level3Bg;
+String level3BgFile = "images/L7.png";
+
+PImage player3;   
+String player3File = "images/Steve.png";
+int player3Row = 10;
+int player3Col = 0;
+
+PImage enemy3;
+String enemyFile3 = "images/Wither.png";
+
+Button b3 = new Button("rect", 1800, 925, 100, 100, "Go To The End!");
+
 
 //VARIABLES: EndScreen
 World endScreen;
 PImage endBg;
-String endBgFile = "images/youwin.png";
+String endBgFile = "images/JAB.png";
 
 
 //VARIABLES: Tracking the current Screen being displayed
@@ -84,15 +106,16 @@ void setup() {
   level1Bg.resize(width, height);
   level2Bg = loadImage(level2BgFile);
   level2Bg.resize(width, height);
+  level3Bg = loadImage(level3BgFile);
+  level3Bg.resize(width, height);
   endBg = loadImage(endBgFile);
   endBg.resize(width, height);  
 
   //SETUP: Screens, Worlds, Grids
   splashScreen = new Screen("splash", splashBg);
   level1Grid = new Grid("Plains", level1Bg, 20, 20);
-  //level1Grid.startPrintingGridMarks();
-  //level2World = new World("sky", level2BgFile, 8.0, 0, 0); //moveable World constructor --> defines center & scale (x, scale, y)???
-  level2World = new World("Nether", level2Bg);   //non-moving World construtor
+  level2Grid = new Grid("Nether", level2Bg, 20, 20);   
+  level3Grid = new Grid("The End", level3Bg, 20, 20);
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
 
@@ -104,16 +127,21 @@ void setup() {
   player1.resize(level1Grid.getTileWidth(),level1Grid.getTileHeight());
   enemy = loadImage(enemyFile);
   enemy.resize(level1Grid.getTileWidth(),level1Grid.getTileHeight());
-  walkingChick = new AnimatedSprite("sprites/chick_walk.png", "sprites/chick_walk.json", 0.0, 0.0, 5.0);
-  level1Grid.setTileSprite(new GridLocation (5,5), walkingChick);
   System.out.println("Done loading Level 1 ...");
   
   //SETUP: Level 2
-  player2 = new Sprite(player2File, 0.25);
-  //player2.moveTo(player2startX, player2startY);
-  level2World.addSpriteCopyTo(runningHorse, 100, 200);  //example Sprite added to a World at a location, with a speed
-  level2World.printWorldSprites();
+  player2 = loadImage(player2File);
+  player2.resize(level2Grid.getTileWidth(),level2Grid.getTileHeight());
+  enemy2 = loadImage(enemyFile2);
+  enemy2.resize(level3Grid.getTileWidth(),level2Grid.getTileHeight());
   System.out.println("Done loading Level 2 ...");
+  
+  //Level 3
+  player3 = loadImage(player3File);
+  player3.resize(level3Grid.getTileWidth(),level3Grid.getTileHeight());
+  enemy3 = loadImage(enemyFile3);
+  enemy3.resize(level3Grid.getTileWidth(),level3Grid.getTileHeight());
+  System.out.println("Done loading Level 3 ...");
   
   //SETUP: Sound
   // Load a soundfile from the /data folder of the sketch and play it back
@@ -179,17 +207,17 @@ void keyPressed(){
 
 
 
-  } else if (currentScreen == level2World){
+  } else if (currentScreen == level2Grid){
 
   //set [W] key to move the player1 down
     if(key == 'w'){
-      player2.move(0,-10);
+      player1.move(0,-1);
     } else if (key == 's'){
-      player2.move(0,10);
+      player1.move(0,1);
     } else if (key == 'a'){
-      player2.move(-10,0);
+      player1.move(-1,0);
     } else if (key == 'd'){
-      player2.move(10,0);
+      player1.move(1,0);
     }
 
 
@@ -310,6 +338,8 @@ public void updateScreen(){
 }
 
 //Method to populate enemies or other sprites on the screen
+
+//Level 1 Enemies
 public void populateSprites(){
 
   //What is the index for the last column?
@@ -332,6 +362,55 @@ public void populateSprites(){
   }
 
 }
+
+//Level 2 Enemies
+public void populateSprites2(){
+
+  //What is the index for the last column?
+  int lastCol2 = level2Grid.getNumCols() -1; 
+
+  //Loop through all the rows in the last column
+  for(int r=0; r<level2Grid.getNumRows(); r++){
+
+    GridLocation loc2 = new GridLocation(r, lastCol);
+
+    //Generate a random number
+    double rando2 = Math.random();
+
+    //10% of the time, decide to add an enemy image to a Tile
+    if(rando2 < 0.1){
+      level2Grid.setTileImage(loc2, enemy2);
+      System.out.println("Adding Wither to " + loc2);
+    }
+
+  }
+
+}
+
+//Level 3 Enemies
+public void populateSprites3(){
+
+  //What is the index for the last column?
+  int lastCol3 = level3Grid.getNumCols() -1; 
+
+  //Loop through all the rows in the last column
+  for(int r=0; r<level3Grid.getNumRows(); r++){
+
+    GridLocation loc3 = new GridLocation(r, lastCol3);
+
+    //Generate a random number
+    double rando3 = Math.random();
+
+    //10% of the time, decide to add an enemy image to a Tile
+    if(rando3 < 0.1){
+      level3Grid.setTileImage(loc3, enemy3);
+      System.out.println("Adding Enderman to " + loc3);
+    }
+
+  }
+
+}
+
 
 //Method to move around the enemies/sprites on the screen
 public void moveSprites(){
