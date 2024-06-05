@@ -27,6 +27,11 @@ Grid level1Grid;
 PImage level1Bg;
 String level1BgFile = "images/L1.png";
 
+// //Level2Grid Screen
+Grid level2Grid;
+PImage level2Bg;
+String level2BgFile = "images/L6.png";
+
 //Player
 PImage player1;   //Use PImage to display the image in a GridLocation
 String player1File = "images/Steve.png";
@@ -34,22 +39,27 @@ int player1Row = 10;
 int player1Col = 0;
 int health = 100;
 
+//Player2
+PImage player2;   //Use PImage to display the image in a GridLocation
+String player2File = "images/Steve.png";
+int player2Row = 10;
+int player2Col = 0;
+int health2 = 100;
+
 //Enemy
 PImage enemy;
 String enemyFile = "images/Creeper.png";
 AnimatedSprite walkingChick;
 
+//Enemy2
+PImage enemy2;
+String enemy2File = "images/Creeper.png";
+AnimatedSprite walkingChick2;
+
 //Button
 Button b1 = new Button("rect", 1800, 925, 100, 100, "Go To Level 2");
 
-//Level 2 Pixel-based Screen
-World level2World;
-PImage level2Bg;
-String level2BgFile = "images/L6.png";
-Sprite player2; //Use Sprite for a pixel-based Location
-String player2File = "images/JAB.png";
-int player2startX = 50;
-int player2startY = 50;
+
 
 //VARIABLES: EndScreen
 World endScreen;
@@ -70,7 +80,7 @@ private int msElapsed = 0;
 void setup() {
 
   //SETUP: Match the screen size to the background image size
-  size(1920,1080);  //these will automatically be saved as width & height
+  size(1366,768);  //these will automatically be saved as width & height
   imageMode(CORNER);    //Set Images to read coordinates at corners
   //fullScreen();   //only use if not using a specfic bg image
   
@@ -92,7 +102,7 @@ void setup() {
   level1Grid = new Grid("Plains", level1Bg, 20, 20);
   //level1Grid.startPrintingGridMarks();
   //level2World = new World("sky", level2BgFile, 8.0, 0, 0); //moveable World constructor --> defines center & scale (x, scale, y)???
-  level2World = new World("Nether", level2Bg);   //non-moving World construtor
+  level2Grid = new Grid("Nether", level2Bg, 20, 20);   //non-moving World construtor
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
 
@@ -109,11 +119,19 @@ void setup() {
   System.out.println("Done loading Level 1 ...");
   
   //SETUP: Level 2
-  player2 = new Sprite(player2File, 0.25);
-  //player2.moveTo(player2startX, player2startY);
-  level2World.addSpriteCopyTo(runningHorse, 100, 200);  //example Sprite added to a World at a location, with a speed
-  level2World.printWorldSprites();
+  player2 = loadImage(player2File);
+  player2.resize(level2Grid.getTileWidth(),level2Grid.getTileHeight());
+  enemy2 = loadImage(enemy2File);
+  enemy2.resize(level2Grid.getTileWidth(),level2Grid.getTileHeight());
+  walkingChick = new AnimatedSprite("sprites/chick_walk.png", "sprites/chick_walk.json", 0.0, 0.0, 5.0);
+  level2Grid.setTileSprite(new GridLocation (5,5), walkingChick);
   System.out.println("Done loading Level 2 ...");
+
+  // player2 = new Sprite(player2File, 0.25);
+  // //player2.moveTo(player2startX, player2startY);
+  // level2World.addSpriteCopyTo(runningHorse, 100, 200);  //example Sprite added to a World at a location, with a speed
+  // level2World.printWorldSprites();
+  // System.out.println("Done loading Level 2 ...");
   
   //SETUP: Sound
   // Load a soundfile from the /data folder of the sketch and play it back
@@ -179,17 +197,19 @@ void keyPressed(){
 
 
 
-  } else if (currentScreen == level2World){
+  } else if (currentScreen == level2Grid){
 
-  //set [W] key to move the player1 down
-    if(key == 'w'){
-      player2.move(0,-10);
-    } else if (key == 's'){
-      player2.move(0,10);
-    } else if (key == 'a'){
-      player2.move(-10,0);
-    } else if (key == 'd'){
-      player2.move(10,0);
+  //set [W] key to move the player2 up & avoid Out-of-Bounds errors
+    if(keyCode == 87){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player2Row, player2Col);
+      
+      //Erase image from previous location
+      
+
+      //change the field for player2Row
+      player2Row--;
     }
 
 
@@ -200,7 +220,7 @@ void keyPressed(){
   if(key == '1'){
     currentScreen = level1Grid;
   } else if(key == '2'){
-    currentScreen = level2World;
+    currentScreen = level2Grid;
   }
 
 
@@ -276,24 +296,32 @@ public void updateScreen(){
     b1.show();
     if(b1.isClicked()){
       System.out.println("\nButton Clicked");
-      currentScreen = level2World;
+      currentScreen = level2Grid;
     }
   
   }
   
-  //UPDATE: level2World Scren
-  if(currentScreen == level2World){
-    System.out.print("2");
-    currentWorld = level2World;
-    currentGrid = null;
+  //UPDATE: level2Grid Screen
+  if(currentScreen == level2Grid){
+    System.out.print("1");
+    currentGrid = level2Grid;
+
+    //Display the Player2 image
+    GridLocation player2Loc = new GridLocation(player2Row,0);
+    level2Grid.setTileImage(player2Loc, player1);
     
-    level2World.moveBgXY(-3.0, 0);
-    level2World.show();
+    //update other screen elements
+    level2Grid.showGridImages();
+    level2Grid.showGridSprites();
+    level2Grid.showWorldSprites();
 
-    player2.show();
-
-    level2World.showWorldSprites();
-
+    //move to next level based on a button click
+    b1.show();
+    if(b1.isClicked()){
+      System.out.println("\nButton Clicked");
+      // currentScreen = level2Grid;
+    }
+  
   }
 
   //UPDATE: End Screen
