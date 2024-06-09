@@ -23,27 +23,22 @@ String splashBgFile = "images/MC.png";
 
 //SoundFile song;
 
-//VARIABLES: Level1Grid Screen
+//Level 1
 Grid level1Grid;
 PImage level1Bg;
 String level1BgFile = "images/L1.png";
 
-//VARIABLES: Level 3
-Grid level3Grid;
-PImage level3Bg;
-String level3BgFile = "images/L7.png";
-
-//VARIABLES: EndScreen
-World endScreen;
-PImage endBg;
-String endBgFile = "images/JAB.png";
-
-//VARIABLES: Players
+//Player
 PImage player1;   //Use PImage to display the image in a GridLocation
 String player1File = "images/Steve.png";
 int player1Row = 10;
 int player1Col = 0;
-int health = 100;
+
+//Pressure Plate
+PImage p1;   
+String p1File = "images/Gold.png";
+int p1Row = 5;
+int p1Col = 6;
 
 //Enemy
 PImage enemy;
@@ -53,7 +48,7 @@ AnimatedSprite walkingChick;
 //Button
 Button b1 = new Button("rect", 1800, 925, 100, 100, "Go To Level 2");
 
-//Level 2 Pixel-based Screen
+//Level 2 
 Grid level2Grid;
 PImage level2Bg;
 String level2BgFile = "images/L6.png";
@@ -62,6 +57,11 @@ PImage player2;
 String player2File = "images/Steve.png";
 int player2Row = 10;
 int player2Col = 0;
+
+PImage p2;   
+String p2File = "images/Gold.png";
+int p2Row = 15;
+int p2Col = 13;
 
 PImage enemy2;
 String enemyFile2 = "images/Wither.png";
@@ -78,19 +78,14 @@ String player3File = "images/Steve.png";
 int player3Row = 10;
 int player3Col = 0;
 
-//VARIABLES: Enemies
-PImage enemy;
-String enemyFile = "images/Creeper.png";
-AnimatedSprite walkingChick;
-PImage enemy2;
-String enemyFile2 = "images/Wither.png";
-AnimatedSprite walkingChick2;
+PImage p3;   
+String p3File = "images/Gold.png";
+int p3Row = 18;
+int p3Col = 19;
+
 PImage enemy3;
 String enemyFile3 = "images/Wither.png";
 
-//VARIABLES: Buttons
-Button b1 = new Button("rect", 1800, 925, 100, 100, "Go To Level 2");
-Button b2 = new Button("rect", 1800, 925, 100, 100, "Go To Level 3");
 Button b3 = new Button("rect", 1800, 925, 100, 100, "Go To The End!");
 
 //VARIABLES: Tracking the current Screen being displayed
@@ -396,9 +391,6 @@ public void populateSprites(){
       System.out.println("Adding bomb to " + loc);
     }
   }
-}
-
-public void populateSprites2(){
 
 //What is the index for the last column?
   int lastCol2 = level2Grid.getNumCols() -1; 
@@ -417,10 +409,6 @@ public void populateSprites2(){
       System.out.println("Adding Wither to " + loc2);
     }
   }
-}
-
-
-public void populateSprites3(){
 
 //What is the index for the last column?
   int lastCol3 = level3Grid.getNumCols() -1; 
@@ -466,10 +454,6 @@ for(int r=0; r<level1Grid.getNumRows(); r++){
       }
     }
   }
-}
-
-//Method to move around the enemies/sprites on the screen
-public void moveSprites2(){
 
 //Loop through all of the rows & cols in the grid
 for(int r=0; r<level2Grid.getNumRows(); r++){
@@ -493,10 +477,6 @@ for(int r=0; r<level2Grid.getNumRows(); r++){
       }
     }
   }
-}
-
-//Method to move around the enemies/sprites on the screen
-public void moveSprites3(){
 
 //Loop through all of the rows & cols in the grid
 for(int r=0; r<level3Grid.getNumRows(); r++){
