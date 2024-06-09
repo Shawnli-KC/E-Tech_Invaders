@@ -1,6 +1,6 @@
 /* Game Class Starter File
  * Authors: Sheanleigh Ken Cajote & Zachary Zhuo
- * Last Edit: 6/3/2024
+ * Last Edit: 6/9/24
  * Modified for AnimatedSprites
  */
 
@@ -9,7 +9,7 @@
 //------------------ GAME VARIABLES --------------------//
 
 //VARIABLES: Title Bar
-String titleText = "Minecraft Shoota";
+String titleText = "Minecraft Charger";
 String extraText = "Are You Ready?";
 
 //VARIABLES: Whole Game
@@ -20,17 +20,13 @@ boolean doAnimation;
 Screen splashScreen;
 PImage splashBg;
 String splashBgFile = "images/MC.png";
+
 //SoundFile song;
 
 //VARIABLES: Level1Grid Screen
 Grid level1Grid;
 PImage level1Bg;
 String level1BgFile = "images/L1.png";
-
-// //Level2Grid Screen
-Grid level2Grid;
-PImage level2Bg;
-String level2BgFile = "images/L6.png";
 
 //Player
 PImage player1;   //Use PImage to display the image in a GridLocation
@@ -39,22 +35,10 @@ int player1Row = 10;
 int player1Col = 0;
 int health = 100;
 
-//Player2
-PImage player2;   //Use PImage to display the image in a GridLocation
-String player2File = "images/Steve.png";
-int player2Row = 10;
-int player2Col = 0;
-int health2 = 100;
-
 //Enemy
 PImage enemy;
 String enemyFile = "images/Creeper.png";
 AnimatedSprite walkingChick;
-
-//Enemy2
-PImage enemy2;
-String enemy2File = "images/Creeper.png";
-AnimatedSprite walkingChick2;
 
 //Button
 Button b1 = new Button("rect", 1800, 925, 100, 100, "Go To Level 2");
@@ -109,7 +93,7 @@ private int msElapsed = 0;
 void setup() {
 
   //SETUP: Match the screen size to the background image size
-  size(1366,768);  //these will automatically be saved as width & height
+  size(1920,1080);  //these will automatically be saved as width & height
   imageMode(CORNER);    //Set Images to read coordinates at corners
   //fullScreen();   //only use if not using a specfic bg image
   
@@ -161,9 +145,8 @@ void setup() {
   System.out.println("Done loading Level 3 ...");
   
   //SETUP: Sound
-  // Load a soundfile from the /data folder of the sketch and play it back
-  // song = new SoundFile(this, "sounds/Lenny_Kravitz_Fly_Away.mp3");
-  // song.play();
+  //song = new SoundFile(this, "AM.mp3");
+  //song.play();
   
   println("Game started...");
 
@@ -226,17 +209,15 @@ void keyPressed(){
 
   } else if (currentScreen == level2Grid){
 
-  //set [W] key to move the player2 up & avoid Out-of-Bounds errors
-    if(keyCode == 87){
-    
-      //Store old GridLocation
-      GridLocation oldLoc = new GridLocation(player2Row, player2Col);
-      
-      //Erase image from previous location
-      
-
-      //change the field for player2Row
-      player2Row--;
+  //set [W] key to move the player1 down
+    if(key == 'w'){
+      player2.move(0,-10);
+    } else if (key == 's'){
+      player2.move(0,10);
+    } else if (key == 'a'){
+      player2.move(-10,0);
+    } else if (key == 'd'){
+      player2.move(10,0);
     }
 
 
@@ -247,7 +228,7 @@ void keyPressed(){
   if(key == '1'){
     currentScreen = level1Grid;
   } else if(key == '2'){
-    currentScreen = level2Grid;
+    currentScreen = level2World;
   }
 
 
@@ -323,19 +304,18 @@ public void updateScreen(){
     b1.show();
     if(b1.isClicked()){
       System.out.println("\nButton Clicked");
-      currentScreen = level2Grid;
+      currentScreen = level2World;
     }
-  
   }
   
   //UPDATE: level2Grid Screen
   if(currentScreen == level2Grid){
-    System.out.print("1");
+    System.out.print("2");
     currentGrid = level2Grid;
 
     //Display the Player2 image
     GridLocation player2Loc = new GridLocation(player2Row,0);
-    level2Grid.setTileImage(player2Loc, player1);
+    level2Grid.setTileImage(player2Loc, player2);
     
     //update other screen elements
     level2Grid.showGridImages();
@@ -343,30 +323,42 @@ public void updateScreen(){
     level2Grid.showWorldSprites();
 
     //move to next level based on a button click
-    b1.show();
-    if(b1.isClicked()){
+    b2.show();
+    if(b2.isClicked()){
       System.out.println("\nButton Clicked");
-      // currentScreen = level2Grid;
+      currentScreen = level3World;
     }
+  }
+
+    //UPDATE: level3Grid Screen
+    if(currentScreen == level3Grid){
+    System.out.print("3");
+    currentGrid = level3Grid;
+
+    //Display the Player2 image
+    GridLocation player3Loc = new GridLocation(player3Row,0);
+    level3Grid.setTileImage(player3Loc, player3);
+    
+    //update other screen elements
+    level3Grid.showGridImages();
+    level3Grid.showGridSprites();
+    level3Grid.showWorldSprites();
+
+    //move to next level based on a button click
+    b3.show();
+    if(b3.isClicked()){
+      System.out.println("\nButton Clicked");
+      currentScreen = endScreen;
+    }
+  }
   
-  }
-
   //UPDATE: End Screen
-  // if(currentScreen == endScreen){
-
-  // }
-
-  //UPDATE: Any Screen
-  if(doAnimation){
-    runningHorse.animateHorizontal(5.0, 10.0, true);
+  if(currentScreen == endScreen){
+    System.out.print("You Won!");
   }
-
-
 }
 
-//Method to populate enemies or other sprites on the screen
-
-//Level 1 Enemies
+//Methods to populate enemies or other sprites on the screen
 public void populateSprites(){
 
   //What is the index for the last column?
@@ -383,41 +375,36 @@ public void populateSprites(){
     //10% of the time, decide to add an enemy image to a Tile
     if(rando < 0.1){
       level1Grid.setTileImage(loc, enemy);
-      System.out.println("Adding Creeper to " + loc);
+      System.out.println("Adding bomb to " + loc);
     }
-
   }
-
 }
 
-//Level 2 Enemies
 public void populateSprites2(){
 
-  //What is the index for the last column?
+//What is the index for the last column?
   int lastCol2 = level2Grid.getNumCols() -1; 
 
   //Loop through all the rows in the last column
   for(int r=0; r<level2Grid.getNumRows(); r++){
 
-    GridLocation loc2 = new GridLocation(r, lastCol);
+    GridLocation loc2 = new GridLocation(r, lastCol2);
 
     //Generate a random number
     double rando2 = Math.random();
 
     //10% of the time, decide to add an enemy image to a Tile
     if(rando2 < 0.1){
-      level2Grid.setTileImage(loc2, enemy2);
+      leve2Grid.setTileImage(loc2, enemy2);
       System.out.println("Adding Wither to " + loc2);
     }
-
   }
-
 }
 
-//Level 3 Enemies
+
 public void populateSprites3(){
 
-  //What is the index for the last column?
+//What is the index for the last column?
   int lastCol3 = level3Grid.getNumCols() -1; 
 
   //Loop through all the rows in the last column
@@ -433,11 +420,8 @@ public void populateSprites3(){
       level3Grid.setTileImage(loc3, enemy3);
       System.out.println("Adding Enderman to " + loc3);
     }
-
   }
-
 }
-
 
 //Method to move around the enemies/sprites on the screen
 public void moveSprites(){
@@ -448,45 +432,76 @@ for(int r=0; r<level1Grid.getNumRows(); r++){
 
     GridLocation loc = new GridLocation(r,c);
 
-    //check for enemy Creeper at the loc
+    //check for enemy bomb at the loc
     if(level1Grid.getTileImage(loc) == enemy ){
 
-      //erase Creeper from current loc
+      //erase bomb from current loc
       level1Grid.clearTileImage(loc);
       
       //only move if it's a legal col
       if( c >= 1){
-        //add Creeper to loc to left
+        //add bomb to loc to left
         GridLocation leftLoc = new GridLocation(r, c-1);
         level1Grid.setTileImage(leftLoc, enemy);
-        //System.out.println("moving Creeper");
+        System.out.println("moving Creeper");
+        }
       }
     }
   }
 }
-      //Store the current GridLocation
 
-      //Store the next GridLocation
+//Method to move around the enemies/sprites on the screen
+public void moveSprites2(){
 
-      //Check if the current tile has an image that is not player1      
+//Loop through all of the rows & cols in the grid
+for(int r=0; r<level2Grid.getNumRows(); r++){
+  for(int c=0; c<level2Grid.getNumCols(); c++){
 
+    GridLocation loc2 = new GridLocation(r,c);
 
-        //Get image/sprite from current location
-          
+    //check for enemy bomb at the loc
+    if(level2Grid.getTileImage(loc2) == enemy2 ){
 
-        //CASE 1: Collision with player1
+      //erase bomb from current loc
+      level2Grid.clearTileImage(loc2);
+      
+      //only move if it's a legal col
+      if( c >= 1){
+        //add bomb to loc to left
+        GridLocation leftLoc2 = new GridLocation(r, c-1);
+        level2Grid.setTileImage(leftLoc2, enemy2);
+        System.out.println("moving Wither");
+        }
+      }
+    }
+  }
+}
 
+//Method to move around the enemies/sprites on the screen
+public void moveSprites3(){
 
-        //CASE 2: Move enemy over to new location
+//Loop through all of the rows & cols in the grid
+for(int r=0; r<level3Grid.getNumRows(); r++){
+  for(int c=0; c<level3Grid.getNumCols(); c++){
 
+    GridLocation loc3 = new GridLocation(r,c);
 
-        //Erase image/sprite from old location
+    //check for enemy bomb at the loc
+    if(level3Grid.getTileImage(loc3) == enemy3 ){
 
-        //System.out.println(loc + " " + grid.hasTileImage(loc));
-
-          
-      //CASE 3: Enemy leaves screen at first column
-
+      //erase bomb from current loc
+      level3Grid.clearTileImage(loc3);
+      
+      //only move if it's a legal col
+      if( c >= 1){
+        //add bomb to loc to left
+        GridLocation leftLoc3 = new GridLocation(r, c-1);
+        level3Grid.setTileImage(leftLoc3, enemy3);
+        System.out.println("moving Enderman");
+        }
+      }
+    }
+  }
 }
 
 //Method to check if there is a collision between Sprites on the Screen
