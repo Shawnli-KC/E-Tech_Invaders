@@ -28,7 +28,17 @@ Grid level1Grid;
 PImage level1Bg;
 String level1BgFile = "images/L1.png";
 
-//Player
+//VARIABLES: Level 3
+Grid level3Grid;
+PImage level3Bg;
+String level3BgFile = "images/L7.png";
+
+//VARIABLES: EndScreen
+World endScreen;
+PImage endBg;
+String endBgFile = "images/JAB.png";
+
+//VARIABLES: Players
 PImage player1;   //Use PImage to display the image in a GridLocation
 String player1File = "images/Steve.png";
 int player1Row = 10;
@@ -68,17 +78,20 @@ String player3File = "images/Steve.png";
 int player3Row = 10;
 int player3Col = 0;
 
+//VARIABLES: Enemies
+PImage enemy;
+String enemyFile = "images/Creeper.png";
+AnimatedSprite walkingChick;
+PImage enemy2;
+String enemyFile2 = "images/Wither.png";
+AnimatedSprite walkingChick2;
 PImage enemy3;
 String enemyFile3 = "images/Wither.png";
 
+//VARIABLES: Buttons
+Button b1 = new Button("rect", 1800, 925, 100, 100, "Go To Level 2");
+Button b2 = new Button("rect", 1800, 925, 100, 100, "Go To Level 3");
 Button b3 = new Button("rect", 1800, 925, 100, 100, "Go To The End!");
-
-
-//VARIABLES: EndScreen
-World endScreen;
-PImage endBg;
-String endBgFile = "images/JAB.png";
-
 
 //VARIABLES: Tracking the current Screen being displayed
 Screen currentScreen;
@@ -225,7 +238,9 @@ void keyPressed(){
 
   //CHANGING SCREENS BASED ON KEYS
   //change to level1 if 1 key pressed, level2 if 2 key is pressed
-  if(key == '1'){
+  if(key == 's'){
+    currentScreen = splashScreen;
+  } else if(key == '1'){
     currentScreen = level1Grid;
   } else if(key == '2'){
     currentScreen = level2World;
@@ -311,6 +326,7 @@ public void updateScreen(){
   //UPDATE: level2Grid Screen
   if(currentScreen == level2Grid){
     System.out.print("2");
+    System.out.print("2");
     currentGrid = level2Grid;
 
     //Display the Player2 image
@@ -323,6 +339,8 @@ public void updateScreen(){
     level2Grid.showWorldSprites();
 
     //move to next level based on a button click
+    b2.show();
+    if(b2.isClicked()){
     b2.show();
     if(b2.isClicked()){
       System.out.println("\nButton Clicked");
