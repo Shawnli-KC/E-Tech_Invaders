@@ -38,8 +38,8 @@ int player1Col = 0;
 //Pressure Plate
 PImage p1;   
 String p1File = "images/Gold.png";
-int p1Row = 8;
-int p1Col = 14;
+int p1Row = 5;
+int p1Col = 6;
 
 //Enemy
 PImage enemy;
@@ -47,7 +47,7 @@ String enemyFile = "images/Creeper.png";
 AnimatedSprite walkingChick;
 
 //Button
-Button b1 = new Button("rect", 1800, 925, 100, 100, "Go To Level 2");
+Button b1 = new Button("rect", 625, 625, 50, 50, "Auto Win");
 
 //Level 2 
 Grid level2Grid;
@@ -61,13 +61,13 @@ int player2Col = 0;
 
 PImage p2;   
 String p2File = "images/Gold.png";
-int p2Row = 15;
-int p2Col = 13;
+int p2Row = 5;
+int p2Col = 12;
 
 PImage enemy2;
 String enemyFile2 = "images/Wither.png";
 
-Button b2 = new Button("rect", 1800, 925, 100, 100, "Go To Level 3");
+Button b2 = new Button("rect", 625, 625, 50, 50, "Go To Level 3");
 
 //Level 3
 Grid level3Grid;
@@ -81,13 +81,13 @@ int player3Col = 0;
 
 PImage p3;   
 String p3File = "images/Gold.png";
-int p3Row = 18;
-int p3Col = 19;
+int p3Row = 7;
+int p3Col = 14;
 
 PImage enemy3;
 String enemyFile3 = "images/Wither.png";
 
-Button b3 = new Button("rect", 1800, 925, 100, 100, "Go To The End!");
+Button b3 = new Button("rect", 625, 625, 50, 50, "Go To The End!");
 
 //VARIABLES: EndScreen
 World endScreen;
@@ -410,7 +410,7 @@ public void updateScreen(){
     level3Grid.setTileImage(player3Loc, player3);
     
     //Display Pressure Plate
-    GridLocation p3Loc = new GridLocation(p3Row,19);
+    GridLocation p3Loc = new GridLocation(p3Row,13);
     level3Grid.setTileImage(p3Loc, p3);
 
     //update other screen elements
