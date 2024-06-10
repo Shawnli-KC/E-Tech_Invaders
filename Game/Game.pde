@@ -88,6 +88,13 @@ String enemyFile3 = "images/Wither.png";
 
 Button b3 = new Button("rect", 1800, 925, 100, 100, "Go To The End!");
 
+//VARIABLES: EndScreen
+World endScreen;
+PImage endBg;
+String endBgFile = "images/JAB.png";
+
+
+
 //VARIABLES: Tracking the current Screen being displayed
 Screen currentScreen;
 World currentWorld;
@@ -219,13 +226,13 @@ void keyPressed(){
 
   //set [W] key to move the player1 down
     if(key == 'w'){
-      player2.move(0,-10);
+      //player2.move(0,-10);
     } else if (key == 's'){
-      player2.move(0,10);
+      //player2.move(0,10);
     } else if (key == 'a'){
-      player2.move(-10,0);
+      //player2.move(-10,0);
     } else if (key == 'd'){
-      player2.move(10,0);
+      //player2.move(10,0);
     }
 
 
@@ -238,7 +245,7 @@ void keyPressed(){
   } else if(key == '1'){
     currentScreen = level1Grid;
   } else if(key == '2'){
-    currentScreen = level2World;
+    currentScreen = level2Grid;
   }
 
 
@@ -275,7 +282,7 @@ public void updateTitleBar(){
 
   if(!isGameOver()) {
     //set the title each loop
-    surface.setTitle(titleText + "    " + extraText + " " + health);
+    surface.setTitle(titleText + " " + extraText + " " );
 
     //adjust the extra text as desired
   
@@ -314,13 +321,12 @@ public void updateScreen(){
     b1.show();
     if(b1.isClicked()){
       System.out.println("\nButton Clicked");
-      currentScreen = level2World;
+      currentScreen = level2Grid;
     }
   }
   
   //UPDATE: level2Grid Screen
   if(currentScreen == level2Grid){
-    System.out.print("2");
     System.out.print("2");
     currentGrid = level2Grid;
 
@@ -334,12 +340,11 @@ public void updateScreen(){
     level2Grid.showWorldSprites();
 
     //move to next level based on a button click
-    b2.show();
-    if(b2.isClicked()){
+
     b2.show();
     if(b2.isClicked()){
       System.out.println("\nButton Clicked");
-      currentScreen = level3World;
+      currentScreen = level3Grid;
     }
   }
 
@@ -371,60 +376,67 @@ public void updateScreen(){
   }
 }
 
-//Methods to populate enemies or other sprites on the screen
+//Method to populate enemies or other sprites on the screen
 public void populateSprites(){
 
-  //What is the index for the last column?
-  int lastCol = level1Grid.getNumCols() -1; 
+  if(currentScreen == level1Grid){
+    //What is the index for the last column?
+    int lastCol = level1Grid.getNumCols() -1; 
 
-  //Loop through all the rows in the last column
-  for(int r=0; r<level1Grid.getNumRows(); r++){
+    //Loop through all the rows in the last column
+    for(int r=0; r<level1Grid.getNumRows(); r++){
 
-    GridLocation loc = new GridLocation(r, lastCol);
+      GridLocation loc = new GridLocation(r, lastCol);
 
-    //Generate a random number
-    double rando = Math.random();
+      //Generate a random number
+      double rando = Math.random();
 
-    //10% of the time, decide to add an enemy image to a Tile
-    if(rando < 0.1){
-      level1Grid.setTileImage(loc, enemy);
-      System.out.println("Adding bomb to " + loc);
+      //10% of the time, decide to add an enemy image to a Tile
+      if(rando < 0.1){
+        level1Grid.setTileImage(loc, enemy);
+        System.out.println("Adding bomb to " + loc);
+      }
     }
   }
 
-//What is the index for the last column?
-  int lastCol2 = level2Grid.getNumCols() -1; 
+  if(currentScreen == level2Grid){
+    //What is the index for the last column?
+    int lastCol2 = level2Grid.getNumCols() -1; 
 
-  //Loop through all the rows in the last column
-  for(int r=0; r<level2Grid.getNumRows(); r++){
+    //Loop through all the rows in the last column
+    for(int r=0; r<level2Grid.getNumRows(); r++){
 
-    GridLocation loc2 = new GridLocation(r, lastCol2);
+      GridLocation loc2 = new GridLocation(r, lastCol2);
 
-    //Generate a random number
-    double rando2 = Math.random();
+      //Generate a random number
+      double rando2 = Math.random();
 
-    //10% of the time, decide to add an enemy image to a Tile
-    if(rando2 < 0.1){
-      leve2Grid.setTileImage(loc2, enemy2);
-      System.out.println("Adding Wither to " + loc2);
+      //10% of the time, decide to add an enemy image to a Tile
+      if(rando2 < 0.1){
+        level2Grid.setTileImage(loc2, enemy2);
+        System.out.println("Adding Wither to " + loc2);
+      }
     }
   }
 
-//What is the index for the last column?
-  int lastCol3 = level3Grid.getNumCols() -1; 
+    if(currentScreen == level3Grid){
 
-  //Loop through all the rows in the last column
-  for(int r=0; r<level3Grid.getNumRows(); r++){
+    //What is the index for the last column?
+    int lastCol3 = level3Grid.getNumCols() -1; 
 
-    GridLocation loc3 = new GridLocation(r, lastCol3);
+    //Loop through all the rows in the last column
+    for(int r=0; r<level3Grid.getNumRows(); r++){
 
-    //Generate a random number
-    double rando3 = Math.random();
+      GridLocation loc3 = new GridLocation(r, lastCol3);
 
-    //10% of the time, decide to add an enemy image to a Tile
-    if(rando3 < 0.1){
-      level3Grid.setTileImage(loc3, enemy3);
-      System.out.println("Adding Enderman to " + loc3);
+      //Generate a random number
+      double rando3 = Math.random();
+
+      //10% of the time, decide to add an enemy image to a Tile
+      if(rando3 < 0.1){
+        level3Grid.setTileImage(loc3, enemy3);
+        System.out.println("Adding Enderman to " + loc3);
+      }
     }
   }
 }
