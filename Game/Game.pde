@@ -1,6 +1,6 @@
 /* Game Class Starter File
  * Authors: Sheanleigh Ken Cajote & Zachary Zhuo
- * Last Edit: 6/9/24
+ * Last Edit: 6/10/24
  * Modified for AnimatedSprites
  */
 
@@ -15,6 +15,7 @@ String extraText = "Are You Ready?";
 //VARIABLES: Whole Game
 AnimatedSprite runningHorse;
 boolean doAnimation;
+int deaths = 0;
 
 //VARIABLES: Splash Screen
 Screen splashScreen;
@@ -136,11 +137,13 @@ void setup() {
   currentScreen = splashScreen;
 
   //SETUP: All Game objects
-  runningHorse = new AnimatedSprite("sprites/horse_run.png", "sprites/horse_run.json", 50.0, 75.0, 10.0);
+  //runningHorse = new AnimatedSprite("sprites/horse_run.png", "sprites/horse_run.json", 50.0, 75.0, 10.0);
 
   //SETUP: Level 1
   player1 = loadImage(player1File);
   player1.resize(level1Grid.getTileWidth(),level1Grid.getTileHeight());
+  p1 = loadImage(p1File);
+  p1.resize(level1Grid.getTileWidth(),level1Grid.getTileHeight());
   enemy = loadImage(enemyFile);
   enemy.resize(level1Grid.getTileWidth(),level1Grid.getTileHeight());
   System.out.println("Done loading Level 1 ...");
@@ -148,13 +151,17 @@ void setup() {
   //SETUP: Level 2
   player2 = loadImage(player2File);
   player2.resize(level2Grid.getTileWidth(),level2Grid.getTileHeight());
+  p2 = loadImage(p2File);
+  p2.resize(level2Grid.getTileWidth(),level2Grid.getTileHeight());
   enemy2 = loadImage(enemyFile2);
-  enemy2.resize(level3Grid.getTileWidth(),level2Grid.getTileHeight());
+  enemy2.resize(level2Grid.getTileWidth(),level2Grid.getTileHeight());
   System.out.println("Done loading Level 2 ...");
   
-  //Level 3
+  //SETUP: Level 3
   player3 = loadImage(player3File);
   player3.resize(level3Grid.getTileWidth(),level3Grid.getTileHeight());
+  p3 = loadImage(p3File);
+  p3.resize(level3Grid.getTileWidth(),level3Grid.getTileHeight());
   enemy3 = loadImage(enemyFile3);
   enemy3.resize(level3Grid.getTileWidth(),level3Grid.getTileHeight());
   System.out.println("Done loading Level 3 ...");
@@ -165,7 +172,8 @@ void setup() {
   
   println("Game started...");
 
-} //end setup()
+  //end setup()
+} 
 
 
 //Required Processing method that automatically loops
@@ -312,6 +320,10 @@ public void updateScreen(){
     GridLocation player1Loc = new GridLocation(player1Row,0);
     level1Grid.setTileImage(player1Loc, player1);
     
+    //Display Pressure Plate
+    GridLocation p1Loc = new GridLocation(p1Row,6);
+    level1Grid.setTileImage(p1Loc, p1);
+
     //update other screen elements
     level1Grid.showGridImages();
     level1Grid.showGridSprites();
@@ -334,6 +346,10 @@ public void updateScreen(){
     GridLocation player2Loc = new GridLocation(player2Row,0);
     level2Grid.setTileImage(player2Loc, player2);
     
+    //Display Pressure Plate
+    GridLocation p2Loc = new GridLocation(p2Row,14);
+    level2Grid.setTileImage(p2Loc, p2);
+
     //update other screen elements
     level2Grid.showGridImages();
     level2Grid.showGridSprites();
@@ -357,6 +373,10 @@ public void updateScreen(){
     GridLocation player3Loc = new GridLocation(player3Row,0);
     level3Grid.setTileImage(player3Loc, player3);
     
+    //Display Pressure Plate
+    GridLocation p3Loc = new GridLocation(p3Row,19);
+    level3Grid.setTileImage(p3Loc, p3);
+
     //update other screen elements
     level3Grid.showGridImages();
     level3Grid.showGridSprites();
@@ -419,7 +439,7 @@ public void populateSprites(){
     }
   }
 
-    if(currentScreen == level3Grid){
+  if(currentScreen == level3Grid){
 
     //What is the index for the last column?
     int lastCol3 = level3Grid.getNumCols() -1; 
