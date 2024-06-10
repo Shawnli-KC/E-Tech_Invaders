@@ -130,9 +130,9 @@ void setup() {
 
   //SETUP: Screens, Worlds, Grids
   splashScreen = new Screen("splash", splashBg);
-  level1Grid = new Grid("Plains", level1Bg, 20, 20);
-  level2Grid = new Grid("Nether", level2Bg, 20, 20);   
-  level3Grid = new Grid("The End", level3Bg, 20, 20);
+  level1Grid = new Grid("Plains", level1Bg, 20, 13);
+  level2Grid = new Grid("Nether", level2Bg, 20, 13);   
+  level3Grid = new Grid("The End", level3Bg, 20, 13);
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
 
@@ -214,41 +214,77 @@ void keyPressed(){
   
   //KEYS FOR LEVEL1
   if(currentScreen == level1Grid){
-
     //set [W] key to move the player1 up & avoid Out-of-Bounds errors
-    if(keyCode == 87){
+    if(player1Row !=0 && keyCode == 87){
     
       //Store old GridLocation
       GridLocation oldLoc = new GridLocation(player1Row, player1Col);
       
       //Erase image from previous location
-      
+      level1Grid.clearTileImage(oldLoc);
 
       //change the field for player1Row
       player1Row--;
     }
 
+//set [A] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player1Col !=0 && keyCode == 65){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player1Row, player1Col);
+      
+      //Erase image from previous location
+      level1Grid.clearTileImage(oldLoc);
 
+      //change the field for player1Row
+      player1Col--;
+    }
+
+//set [S] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player1Row !=12 && keyCode == 83){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player1Row, player1Col);
+      
+      //Erase image from previous location
+      level1Grid.clearTileImage(oldLoc);
+
+      //change the field for player1Row
+      player1Row++;
+    }
+
+    //set [D] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player1Col !=19 && keyCode == 68){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player1Row, player1Col);
+      
+      //Erase image from previous location
+      level1Grid.clearTileImage(oldLoc);
+
+      //change the field for player1Row
+      player1Col++;
+    }
 
   } else if (currentScreen == level2Grid){
 
-  //set [W] key to move the player1 down
-    if(key == 'w'){
-      //player2.move(0,-10);
-    } else if (key == 's'){
-      //player2.move(0,10);
-    } else if (key == 'a'){
-      //player2.move(-10,0);
-    } else if (key == 'd'){
-      //player2.move(10,0);
-    }
+  // //set [W] key to move the player1 down
+  //   if(key == 'w'){
+  //     //player2.move(0,-10);
+  //   } else if (key == 's'){
+  //     //player2.move(0,10);
+  //   } else if (key == 'a'){
+  //     //player2.move(-10,0);
+  //   } else if (key == 'd'){
+  //     //player2.move(10,0);
+  //   }
 
 
   }
 
   //CHANGING SCREENS BASED ON KEYS
   //change to level1 if 1 key pressed, level2 if 2 key is pressed
-  if(key == 's'){
+  if(key == '0'){
     currentScreen = splashScreen;
   } else if(key == '1'){
     currentScreen = level1Grid;
@@ -306,7 +342,7 @@ public void updateScreen(){
   }
 
   //UPDATE: splashScreen
-  if(currentScreen == splashScreen && splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 5000){
+  if(currentScreen == splashScreen && splashScreen.getScreenTime() > 3000 && splashScreen.getScreenTime() < 10000){
     System.out.print("s");
     currentScreen = level1Grid;
   }
@@ -412,9 +448,9 @@ public void populateSprites(){
       double rando = Math.random();
 
       //10% of the time, decide to add an enemy image to a Tile
-      if(rando < 0.1){
+      if(rando < 0.01){
         level1Grid.setTileImage(loc, enemy);
-        System.out.println("Adding bomb to " + loc);
+        System.out.println("Adding Creeper to " + loc);
       }
     }
   }
