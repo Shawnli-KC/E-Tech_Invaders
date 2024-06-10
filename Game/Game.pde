@@ -38,8 +38,8 @@ int player1Col = 0;
 //Pressure Plate
 PImage p1;   
 String p1File = "images/Gold.png";
-int p1Row = 5;
-int p1Col = 6;
+int p1Row = 8;
+int p1Col = 14;
 
 //Enemy
 PImage enemy;
@@ -109,7 +109,7 @@ private int msElapsed = 0;
 void setup() {
 
   //SETUP: Match the screen size to the background image size
-  size(1920,1080);  //these will automatically be saved as width & height
+  size(700,700);  //these will automatically be saved as width & height
   imageMode(CORNER);    //Set Images to read coordinates at corners
   //fullScreen();   //only use if not using a specfic bg image
   
@@ -130,9 +130,9 @@ void setup() {
 
   //SETUP: Screens, Worlds, Grids
   splashScreen = new Screen("splash", splashBg);
-  level1Grid = new Grid("Plains", level1Bg, 20, 13);
-  level2Grid = new Grid("Nether", level2Bg, 20, 13);   
-  level3Grid = new Grid("The End", level3Bg, 20, 13);
+  level1Grid = new Grid("Plains", level1Bg, 15, 15);
+  level2Grid = new Grid("Nether", level2Bg, 15, 15);   
+  level3Grid = new Grid("The End", level3Bg, 15, 15);
   endScreen = new World("end", endBg);
   currentScreen = splashScreen;
 
@@ -241,7 +241,7 @@ void keyPressed(){
     }
 
 //set [S] key to move the player1 up & avoid Out-of-Bounds errors
-    if(player1Row !=12 && keyCode == 83){
+    if(player1Row !=14 && keyCode == 83){
     
       //Store old GridLocation
       GridLocation oldLoc = new GridLocation(player1Row, player1Col);
@@ -254,7 +254,7 @@ void keyPressed(){
     }
 
     //set [D] key to move the player1 up & avoid Out-of-Bounds errors
-    if(player1Col !=19 && keyCode == 68){
+    if(player1Col !=14 && keyCode == 68){
     
       //Store old GridLocation
       GridLocation oldLoc = new GridLocation(player1Row, player1Col);
@@ -353,11 +353,11 @@ public void updateScreen(){
     currentGrid = level1Grid;
 
     //Display the Player1 image
-    GridLocation player1Loc = new GridLocation(player1Row,0);
+    GridLocation player1Loc = new GridLocation(player1Row,player1Col);
     level1Grid.setTileImage(player1Loc, player1);
     
     //Display Pressure Plate
-    GridLocation p1Loc = new GridLocation(p1Row,6);
+    GridLocation p1Loc = new GridLocation(p1Row,p1Col);
     level1Grid.setTileImage(p1Loc, p1);
 
     //update other screen elements
@@ -448,7 +448,7 @@ public void populateSprites(){
       double rando = Math.random();
 
       //10% of the time, decide to add an enemy image to a Tile
-      if(rando < 0.01){
+      if(rando < 0.05){
         level1Grid.setTileImage(loc, enemy);
         System.out.println("Adding Creeper to " + loc);
       }
