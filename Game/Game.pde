@@ -16,6 +16,7 @@ String extraText = "Are You Ready?";
 AnimatedSprite runningHorse;
 boolean doAnimation;
 int deaths = 0;
+int level = 1;
 
 //VARIABLES: Splash Screen
 Screen splashScreen;
@@ -38,7 +39,7 @@ int player1Col = 0;
 //Pressure Plate
 PImage p1;   
 String p1File = "images/Gold.png";
-int p1Row = 5;
+int p1Row = 3;
 int p1Col = 6;
 
 //Enemy
@@ -61,13 +62,13 @@ int player2Col = 0;
 
 PImage p2;   
 String p2File = "images/Gold.png";
-int p2Row = 5;
-int p2Col = 12;
+int p2Row = 6;
+int p2Col = 10;
 
 PImage enemy2;
 String enemyFile2 = "images/Wither.png";
 
-Button b2 = new Button("rect", 625, 625, 50, 50, "Go To Level 3");
+Button b2 = new Button("rect", 625, 625, 50, 50, "Auto Win");
 
 //Level 3
 Grid level3Grid;
@@ -81,13 +82,13 @@ int player3Col = 0;
 
 PImage p3;   
 String p3File = "images/Gold.png";
-int p3Row = 7;
+int p3Row = 12;
 int p3Col = 14;
 
 PImage enemy3;
 String enemyFile3 = "images/Wither.png";
 
-Button b3 = new Button("rect", 625, 625, 50, 50, "Go To The End!");
+Button b3 = new Button("rect", 625, 625, 50, 50, "Auto Win");
 
 //VARIABLES: EndScreen
 World endScreen;
@@ -265,21 +266,112 @@ void keyPressed(){
       //change the field for player1Row
       player1Col++;
     }
+  } 
+  else if (currentScreen == level2Grid){
+    //set [W] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player2Row !=0 && keyCode == 87){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player2Row, player2Col);
+      
+      //Erase image from previous location
+      level2Grid.clearTileImage(oldLoc);
 
-  } else if (currentScreen == level2Grid){
+      //change the field for player1Row
+      player2Row--;
+    }
 
-  // //set [W] key to move the player1 down
-  //   if(key == 'w'){
-  //     //player2.move(0,-10);
-  //   } else if (key == 's'){
-  //     //player2.move(0,10);
-  //   } else if (key == 'a'){
-  //     //player2.move(-10,0);
-  //   } else if (key == 'd'){
-  //     //player2.move(10,0);
-  //   }
+//set [A] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player2Col !=0 && keyCode == 65){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player2Row, player2Col);
+      
+      //Erase image from previous location
+      level2Grid.clearTileImage(oldLoc);
 
+      //change the field for player1Row
+      player2Col--;
+    }
 
+//set [S] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player2Row !=14 && keyCode == 83){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player2Row, player2Col);
+      
+      //Erase image from previous location
+      level2Grid.clearTileImage(oldLoc);
+
+      //change the field for player1Row
+      player2Row++;
+    }
+
+    //set [D] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player2Col !=14 && keyCode == 68){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player2Row, player2Col);
+      
+      //Erase image from previous location
+      level2Grid.clearTileImage(oldLoc);
+
+      //change the field for player1Row
+      player2Col++;
+    }
+  }
+  else if (currentScreen == level3Grid){
+    //set [W] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player3Row !=0 && keyCode == 87){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player3Row, player3Col);
+      
+      //Erase image from previous location
+      level3Grid.clearTileImage(oldLoc);
+
+      //change the field for player1Row
+      player3Row--;
+    }
+
+//set [A] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player3Col !=0 && keyCode == 65){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player3Row, player3Col);
+      
+      //Erase image from previous location
+      level3Grid.clearTileImage(oldLoc);
+
+      //change the field for player1Row
+      player3Col--;
+    }
+
+//set [S] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player3Row !=14 && keyCode == 83){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player3Row, player3Col);
+      
+      //Erase image from previous location
+      level3Grid.clearTileImage(oldLoc);
+
+      //change the field for player1Row
+      player3Row++;
+    }
+
+    //set [D] key to move the player1 up & avoid Out-of-Bounds errors
+    if(player3Col !=14 && keyCode == 68){
+    
+      //Store old GridLocation
+      GridLocation oldLoc = new GridLocation(player3Row, player3Col);
+      
+      //Erase image from previous location
+      level3Grid.clearTileImage(oldLoc);
+
+      //change the field for player1Row
+      player3Col++;
+    }
   }
 
   //CHANGING SCREENS BASED ON KEYS
@@ -326,7 +418,7 @@ public void updateTitleBar(){
 
   if(!isGameOver()) {
     //set the title each loop
-    surface.setTitle(titleText + " " + extraText + " " );
+    surface.setTitle(titleText + "    " + extraText + "    " + "Deaths: " + deaths + "    " + "Level: " + level);
 
     //adjust the extra text as desired
   
@@ -371,6 +463,11 @@ public void updateScreen(){
       System.out.println("\nButton Clicked");
       currentScreen = level2Grid;
     }
+    if(isLevelOver()){
+      level++;
+      System.out.println(level);
+      currentScreen = level2Grid;
+    }
   }
   
   //UPDATE: level2Grid Screen
@@ -379,11 +476,11 @@ public void updateScreen(){
     currentGrid = level2Grid;
 
     //Display the Player2 image
-    GridLocation player2Loc = new GridLocation(player2Row,0);
+    GridLocation player2Loc = new GridLocation(player2Row, player2Col);
     level2Grid.setTileImage(player2Loc, player2);
     
     //Display Pressure Plate
-    GridLocation p2Loc = new GridLocation(p2Row,14);
+    GridLocation p2Loc = new GridLocation(p2Row,p2Col);
     level2Grid.setTileImage(p2Loc, p2);
 
     //update other screen elements
@@ -398,6 +495,11 @@ public void updateScreen(){
       System.out.println("\nButton Clicked");
       currentScreen = level3Grid;
     }
+    if(isLevelOver()){
+      level++;
+      System.out.println(level);
+      currentScreen = level3Grid;
+    }
   }
 
     //UPDATE: level3Grid Screen
@@ -406,11 +508,11 @@ public void updateScreen(){
     currentGrid = level3Grid;
 
     //Display the Player2 image
-    GridLocation player3Loc = new GridLocation(player3Row,0);
+    GridLocation player3Loc = new GridLocation(player3Row,player3Col);
     level3Grid.setTileImage(player3Loc, player3);
     
     //Display Pressure Plate
-    GridLocation p3Loc = new GridLocation(p3Row,13);
+    GridLocation p3Loc = new GridLocation(p3Row,p3Col);
     level3Grid.setTileImage(p3Loc, p3);
 
     //update other screen elements
@@ -422,6 +524,11 @@ public void updateScreen(){
     b3.show();
     if(b3.isClicked()){
       System.out.println("\nButton Clicked");
+      currentScreen = endScreen;
+    }
+    if(isLevelOver()){
+      level++;
+      System.out.println(level);
       currentScreen = endScreen;
     }
   }
@@ -496,7 +603,6 @@ public void populateSprites(){
     }
   }
 }
-
 //Method to move around the enemies/sprites on the screen
 public void moveSprites(){
 
@@ -517,7 +623,7 @@ for(int r=0; r<level1Grid.getNumRows(); r++){
         //add bomb to loc to left
         GridLocation leftLoc = new GridLocation(r, c-1);
         level1Grid.setTileImage(leftLoc, enemy);
-        System.out.println("moving Creeper");
+        System.out.println("Moving Creeper");
         }
       }
     }
@@ -540,7 +646,7 @@ for(int r=0; r<level2Grid.getNumRows(); r++){
         //add bomb to loc to left
         GridLocation leftLoc2 = new GridLocation(r, c-1);
         level2Grid.setTileImage(leftLoc2, enemy2);
-        System.out.println("moving Wither");
+        System.out.println("Moving Wither");
         }
       }
     }
@@ -563,7 +669,7 @@ for(int r=0; r<level3Grid.getNumRows(); r++){
         //add bomb to loc to left
         GridLocation leftLoc3 = new GridLocation(r, c-1);
         level3Grid.setTileImage(leftLoc3, enemy3);
-        System.out.println("moving Enderman");
+        System.out.println("Moving Enderman");
         }
       }
     }
@@ -571,31 +677,54 @@ for(int r=0; r<level3Grid.getNumRows(); r++){
 }
 
 //Method to check if there is a collision between Sprites on the Screen
-public boolean checkCollision(GridLocation loc, GridLocation nextLoc){
+public boolean checkCollision(){
 
-  //Check what image/sprite is stored in the CURRENT location
-  // PImage image = grid.getTileImage(loc);
-  // AnimatedSprite sprite = grid.getTileSprite(loc);
+  //Level 1 Collisions
+  
+  
+  //Level 2 collisions
+  
+  
+  //Level 3 Collisions
 
-  //if empty --> no collision
-
-  //Check what image/sprite is stored in the NEXT location
-
-  //if empty --> no collision
-
-  //check if enemy runs into player
-
-    //clear out the enemy if it hits the player (using cleartTileImage() or clearTileSprite() from Grid class)
-
-    //Update status variable
-
-  //check if a player collides into enemy
-
+  
   return false; //<--default return
 }
 
 //method to indicate when the main game is over
+public boolean isLevelOver(){
+  if(currentScreen == level1Grid){
+    GridLocation player1Loc = new GridLocation(player1Row,player1Col);
+    GridLocation p1Loc = new GridLocation(p1Row, p1Col);
+
+    if(player1Loc.equals(p1Loc)){
+      return true;
+    }
+  } else if(currentScreen == level2Grid){
+    GridLocation player2Loc = new GridLocation(player2Row,player2Col);
+    GridLocation p2Loc = new GridLocation(p2Row, p2Col);
+
+    if(player2Loc.equals(p2Loc)){
+      return true;
+    }
+  }
+
+else if(currentScreen == level3Grid){
+GridLocation player3Loc = new GridLocation(player3Row,player3Col);
+  GridLocation p3Loc = new GridLocation(p3Row, p3Col);
+
+  if(player3Loc.equals(p3Loc)){
+    return true;
+  }
+}
+  return false; //by default, the game is never over
+}
+//method to indicate when the main game is over
 public boolean isGameOver(){
+
+
+
+
   
   return false; //by default, the game is never over
 }
