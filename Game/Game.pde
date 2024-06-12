@@ -16,14 +16,17 @@ String extraText = "Are You Ready?";
 AnimatedSprite runningHorse;
 boolean doAnimation;
 int deaths = 0;
-int level = 1;
+int level = 1;        
 
 //VARIABLES: Splash Screen
 Screen splashScreen;
 PImage splashBg;
 String splashBgFile = "images/MC.png";
 
+
 //SoundFile song;
+//song = new SoundFile(this, "AM.mp3");
+//song.play();
 
 //Level 1
 Grid level1Grid;
@@ -93,7 +96,7 @@ Button b3 = new Button("rect", 625, 625, 50, 50, "Auto Win");
 //VARIABLES: EndScreen
 World endScreen;
 PImage endBg;
-String endBgFile = "images/JAB.png";
+String endBgFile = "images/Ending.png";
 
 
 
