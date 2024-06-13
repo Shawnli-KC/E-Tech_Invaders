@@ -1,37 +1,36 @@
 /* Game Class Starter File
  * Authors: Sheanleigh Ken Cajote & Zachary Zhuo
- * Last Edit: 6/10/24
+ * Last Edit: 6/12/24
  * Modified for AnimatedSprites
  */
 
-//import processing.sound.*;
+import processing.sound.*;
 
 //------------------ GAME VARIABLES --------------------//
 
 //VARIABLES: Title Bar
-String titleText = "Minecraft Charger";
-String extraText = "Are You Ready?";
+String titleText = "E-Techcraft";
+String extraText = "Use 'WASD' to move Steve to the gold pressure plates and get 3 diamonds to win.";
 
 //VARIABLES: Whole Game
 AnimatedSprite runningHorse;
 boolean doAnimation;
 int deaths = 0;
-int level = 1;        
+int level = 0;        
 
 //VARIABLES: Splash Screen
 Screen splashScreen;
 PImage splashBg;
 String splashBgFile = "images/MC.png";
+SoundFile song;
+Delay music;
 
-
-//SoundFile song;
-//song = new SoundFile(this, "AM.mp3");
-//song.play();
 
 //Level 1
 Grid level1Grid;
 PImage level1Bg;
 String level1BgFile = "images/L1.png";
+
 
 //Player
 PImage player1;   //Use PImage to display the image in a GridLocation
@@ -51,7 +50,7 @@ String enemyFile = "images/Creeper.png";
 AnimatedSprite walkingChick;
 
 //Button
-Button b1 = new Button("rect", 625, 625, 50, 50, "Auto Win");
+Button b1 = new Button("rect", 825, 825, 50, 50, "Auto Win");
 
 //Level 2 
 Grid level2Grid;
@@ -71,7 +70,7 @@ int p2Col = 10;
 PImage enemy2;
 String enemyFile2 = "images/Wither.png";
 
-Button b2 = new Button("rect", 625, 625, 50, 50, "Auto Win");
+Button b2 = new Button("rect", 825, 825, 50, 50, "Auto Win");
 
 //Level 3
 Grid level3Grid;
@@ -91,7 +90,7 @@ int p3Col = 14;
 PImage enemy3;
 String enemyFile3 = "images/Wither.png";
 
-Button b3 = new Button("rect", 625, 625, 50, 50, "Auto Win");
+Button b3 = new Button("rect", 825, 825, 50, 50, "Auto Win");
 
 //VARIABLES: EndScreen
 World endScreen;
@@ -104,21 +103,26 @@ String endBgFile = "images/Ending.png";
 Screen currentScreen;
 World currentWorld;
 Grid currentGrid;
-private int msElapsed = 0;
-
+int msElapsed = 0;
 
 //------------------ REQUIRED PROCESSING METHODS --------------------//
 
 //Required Processing method that gets run once
 void setup() {
-
+  
   //SETUP: Match the screen size to the background image size
-  size(700,700);  //these will automatically be saved as width & height
+  size(900,900);  //these will automatically be saved as width & height
   imageMode(CORNER);    //Set Images to read coordinates at corners
   //fullScreen();   //only use if not using a specfic bg image
-  
   //SETUP: Set the title on the title bar
   surface.setTitle(titleText);
+
+  //Music
+  song = new SoundFile(this, "sounds/AM.mp3");
+  music = new Delay(this);
+  song.play();
+  music.process(song, 5);
+  music.time(0.5);
 
   //SETUP: Load BG images used in all screens
   splashBg = loadImage(splashBgFile);
@@ -130,7 +134,7 @@ void setup() {
   level3Bg = loadImage(level3BgFile);
   level3Bg.resize(width, height);
   endBg = loadImage(endBgFile);
-  endBg.resize(width, height);  
+  endBg.resize(width, height); 
 
   //SETUP: Screens, Worlds, Grids
   splashScreen = new Screen("splash", splashBg);
@@ -169,11 +173,7 @@ void setup() {
   enemy3 = loadImage(enemyFile3);
   enemy3.resize(level3Grid.getTileWidth(),level3Grid.getTileHeight());
   System.out.println("Done loading Level 3 ...");
-  
-  //SETUP: Sound
-  //song = new SoundFile(this, "AM.mp3");
-  //song.play();
-  
+    
   println("Game started...");
 
   //end setup()
@@ -185,7 +185,7 @@ void setup() {
 void draw() {
 
   updateTitleBar();
-
+  
   //simple timing handling
   if (msElapsed % 300 == 0) {
     //sprite handling
@@ -421,7 +421,7 @@ public void updateTitleBar(){
 
   if(!isGameOver()) {
     //set the title each loop
-    surface.setTitle(titleText + "    " + extraText + "    " + "Deaths: " + deaths + "    " + "Level: " + level);
+    surface.setTitle(titleText + "      " + extraText + "     " + "[Diamonds: " + level + "]      " + "[Deaths: " + deaths + "]");
 
     //adjust the extra text as desired
   
@@ -724,12 +724,7 @@ GridLocation player3Loc = new GridLocation(player3Row,player3Col);
 }
 //method to indicate when the main game is over
 public boolean isGameOver(){
-
-
-
-
-  
-  return false; //by default, the game is never over
+  return false; 
 }
 
 //method to describe what happens after the game is over
