@@ -88,7 +88,7 @@ int p3Row = 12;
 int p3Col = 14;
 
 PImage enemy3;
-String enemyFile3 = "images/Wither.png";
+String enemyFile3 = "images/Enderman.png";
 
 Button b3 = new Button("rect", 825, 825, 50, 50, "Auto Win");
 
@@ -146,6 +146,15 @@ void setup() {
 
   //SETUP: All Game objects
   //runningHorse = new AnimatedSprite("sprites/horse_run.png", "sprites/horse_run.json", 50.0, 75.0, 10.0);
+  b1.setButtonColor(color(255, 255, 255));   //white
+  b1.setHoverColor(color(0,0,255)); //blue
+  b1.setClickColor(color(0,0,0)); //black
+  b2.setButtonColor(color(255, 255, 255));   //white
+  b2.setHoverColor(color(0,0,255)); //blue
+  b2.setClickColor(color(0,0,0)); //black
+  b3.setButtonColor(color(255, 255, 255));   //white
+  b3.setHoverColor(color(0,0,255)); //blue
+  b3.setClickColor(color(0,0,0)); //black
 
   //SETUP: Level 1
   player1 = loadImage(player1File);
@@ -505,8 +514,8 @@ public void updateScreen(){
     }
   }
 
-    //UPDATE: level3Grid Screen
-    if(currentScreen == level3Grid){
+  //UPDATE: level3Grid Screen
+  if(currentScreen == level3Grid){
     System.out.print("3");
     currentGrid = level3Grid;
 
@@ -609,101 +618,102 @@ public void populateSprites(){
 //Method to move around the enemies/sprites on the screen
 public void moveSprites(){
 
-//Loop through all of the rows & cols in the grid
-for(int r=0; r<level1Grid.getNumRows(); r++){
-  for(int c=0; c<level1Grid.getNumCols(); c++){
+  //Loop through all of the rows & cols in the grid
+  for(int r=0; r<level1Grid.getNumRows(); r++){
+    for(int c=0; c<level1Grid.getNumCols(); c++){
 
-    GridLocation loc = new GridLocation(r,c);
+      GridLocation loc = new GridLocation(r,c);
 
-    //check for creeper at the loc
-    if(level1Grid.getTileImage(loc) == enemy ){
+      //check for creeper at the loc
+      if(level1Grid.getTileImage(loc) == enemy ){
 
-      //erase creeper from current loc
-      level1Grid.clearTileImage(loc);
-      
-      //only move if it's a legal col
-      if( c >= 1){
+        //erase creeper from current loc
+        level1Grid.clearTileImage(loc);
+        
+        //only move if it's a legal col
+        if( c >= 1){
 
-        GridLocation leftLoc = new GridLocation(r, c-1);
+          GridLocation leftLoc = new GridLocation(r, c-1);
 
-        //CHECK IF CREEPER IS ABOUT TO HIT STEVE
-        if(steve.equals(level1Grid.getTileImage(leftLoc))){
-
-
-
-        }
-        //if not,add creeper to loc to left
-        else{
-          level1Grid.setTileImage(leftLoc, enemy);
-          //System.out.println("Moving Creeper");
-        }
-      }
-    }
-  }
-}
-
-//Loop through all of the rows & cols in the grid
-for(int r=0; r<level2Grid.getNumRows(); r++){
-  for(int c=0; c<level2Grid.getNumCols(); c++){
-
-    GridLocation loc2 = new GridLocation(r,c);
-
-    //check for wither at the loc
-    if(level2Grid.getTileImage(loc2) == enemy2 ){
-
-      //erase wither from current loc
-      level2Grid.clearTileImage(loc2);
-      
-      //only move if it's a legal col
-      if( c >= 1){
-
-        GridLocation leftLoc = new GridLocation(r, c-1);
-
-        //CHECK IF WITHER IS ABOUT TO HIT STEVE
-        if(steve.equals(level1Grid.getTileImage(leftLoc))){
+          //CHECK IF CREEPER IS ABOUT TO HIT STEVE
+          if(player1.equals(level1Grid.getTileImage(leftLoc))){
 
 
 
-        }
-
-        //if not,add wither to loc to left
-        else{
-          level1Grid.setTileImage(leftLoc, enemy);
-          //System.out.println("Moving Wither");
+          }
+          //if not,add creeper to loc to left
+          else{
+            level1Grid.setTileImage(leftLoc, enemy);
+            //System.out.println("Moving Creeper");
+          }
         }
       }
     }
   }
-}
 
-//Loop through all of the rows & cols in the grid
-for(int r=0; r<level3Grid.getNumRows(); r++){
-  for(int c=0; c<level3Grid.getNumCols(); c++){
+  //Loop through all of the rows & cols in the grid
+  for(int r=0; r<level2Grid.getNumRows(); r++){
+    for(int c=0; c<level2Grid.getNumCols(); c++){
 
-    GridLocation loc3 = new GridLocation(r,c);
+      GridLocation loc2 = new GridLocation(r,c);
 
-    //check for eman at the loc
-    if(level3Grid.getTileImage(loc3) == enemy3 ){
+      //check for wither at the loc
+      if(level2Grid.getTileImage(loc2) == enemy2 ){
 
-      //erase eman from current loc
-      level3Grid.clearTileImage(loc3);
-      
-      //only move if it's a legal col
-      if( c >= 1){
+        //erase wither from current loc
+        level2Grid.clearTileImage(loc2);
+        
+        //only move if it's a legal col
+        if( c >= 1){
 
-        GridLocation leftLoc = new GridLocation(r, c-1);
+          GridLocation leftLoc = new GridLocation(r, c-1);
 
-        //CHECK IF EMAN IS ABOUT TO HIT STEVE
-        if(steve.equals(level1Grid.getTileImage(leftLoc))){
-
+          //CHECK IF WITHER IS ABOUT TO HIT STEVE
+          if(player2.equals(level1Grid.getTileImage(leftLoc))){
 
 
+
+          }
+
+          //if not,add wither to loc to left
+          else{
+            level2Grid.setTileImage(leftLoc, enemy2);
+            //System.out.println("Moving Wither");
+          }
         }
+      }
+    }
+  }
 
-        //if not,add eman to loc to left
-        else{
-          level1Grid.setTileImage(leftLoc, enemy);
-          //System.out.println("Moving Enderman");
+  //Loop through all of the rows & cols in the grid
+  for(int r=0; r<level3Grid.getNumRows(); r++){
+    for(int c=0; c<level3Grid.getNumCols(); c++){
+
+      GridLocation loc3 = new GridLocation(r,c);
+
+      //check for eman at the loc
+      if(level3Grid.getTileImage(loc3) == enemy3 ){
+
+        //erase eman from current loc
+        level3Grid.clearTileImage(loc3);
+        
+        //only move if it's a legal col
+        if( c >= 1){
+
+          GridLocation leftLoc = new GridLocation(r, c-1);
+
+          //CHECK IF EMAN IS ABOUT TO HIT STEVE
+          if(player3.equals(level1Grid.getTileImage(leftLoc))){
+
+
+
+          }
+
+          //if not,add eman to loc to left
+          else{
+            level3Grid.setTileImage(leftLoc, enemy3);
+            //System.out.println("Moving Enderman");
+          }
         }
       }
     }
@@ -714,6 +724,7 @@ for(int r=0; r<level3Grid.getNumRows(); r++){
 //method to indicate when the main game is over
 public boolean isLevelOver(){
   if(currentScreen == level1Grid){
+
     GridLocation player1Loc = new GridLocation(player1Row,player1Col);
     GridLocation p1Loc = new GridLocation(p1Row, p1Col);
 
@@ -729,16 +740,17 @@ public boolean isLevelOver(){
     }
   }
 
-else if(currentScreen == level3Grid){
-GridLocation player3Loc = new GridLocation(player3Row,player3Col);
-  GridLocation p3Loc = new GridLocation(p3Row, p3Col);
+  else if(currentScreen == level3Grid){
+    GridLocation player3Loc = new GridLocation(player3Row,player3Col);
+    GridLocation p3Loc = new GridLocation(p3Row, p3Col);
 
-  if(player3Loc.equals(p3Loc)){
-    return true;
+    if(player3Loc.equals(p3Loc)){
+      return true;
+    }
   }
-}
   return false; //by default, the game is never over
 }
+
 //method to indicate when the main game is over
 public boolean isGameOver(){
   return false; 
