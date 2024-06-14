@@ -615,22 +615,32 @@ for(int r=0; r<level1Grid.getNumRows(); r++){
 
     GridLocation loc = new GridLocation(r,c);
 
-    //check for enemy bomb at the loc
+    //check for creeper at the loc
     if(level1Grid.getTileImage(loc) == enemy ){
 
-      //erase bomb from current loc
+      //erase creeper from current loc
       level1Grid.clearTileImage(loc);
       
       //only move if it's a legal col
       if( c >= 1){
-        //add bomb to loc to left
+
         GridLocation leftLoc = new GridLocation(r, c-1);
-        level1Grid.setTileImage(leftLoc, enemy);
-        System.out.println("Moving Creeper");
+
+        //CHECK IF CREEPER IS ABOUT TO HIT STEVE
+        if(steve.equals(level1Grid.getTileImage(leftLoc))){
+
+
+
+        }
+        //if not,add creeper to loc to left
+        else{
+          level1Grid.setTileImage(leftLoc, enemy);
+          //System.out.println("Moving Creeper");
         }
       }
     }
   }
+}
 
 //Loop through all of the rows & cols in the grid
 for(int r=0; r<level2Grid.getNumRows(); r++){
@@ -638,22 +648,33 @@ for(int r=0; r<level2Grid.getNumRows(); r++){
 
     GridLocation loc2 = new GridLocation(r,c);
 
-    //check for enemy bomb at the loc
+    //check for wither at the loc
     if(level2Grid.getTileImage(loc2) == enemy2 ){
 
-      //erase bomb from current loc
+      //erase wither from current loc
       level2Grid.clearTileImage(loc2);
       
       //only move if it's a legal col
       if( c >= 1){
-        //add bomb to loc to left
-        GridLocation leftLoc2 = new GridLocation(r, c-1);
-        level2Grid.setTileImage(leftLoc2, enemy2);
-        System.out.println("Moving Wither");
+
+        GridLocation leftLoc = new GridLocation(r, c-1);
+
+        //CHECK IF WITHER IS ABOUT TO HIT STEVE
+        if(steve.equals(level1Grid.getTileImage(leftLoc))){
+
+
+
+        }
+
+        //if not,add wither to loc to left
+        else{
+          level1Grid.setTileImage(leftLoc, enemy);
+          //System.out.println("Moving Wither");
         }
       }
     }
   }
+}
 
 //Loop through all of the rows & cols in the grid
 for(int r=0; r<level3Grid.getNumRows(); r++){
@@ -661,38 +682,34 @@ for(int r=0; r<level3Grid.getNumRows(); r++){
 
     GridLocation loc3 = new GridLocation(r,c);
 
-    //check for enemy bomb at the loc
+    //check for eman at the loc
     if(level3Grid.getTileImage(loc3) == enemy3 ){
 
-      //erase bomb from current loc
+      //erase eman from current loc
       level3Grid.clearTileImage(loc3);
       
       //only move if it's a legal col
       if( c >= 1){
-        //add bomb to loc to left
-        GridLocation leftLoc3 = new GridLocation(r, c-1);
-        level3Grid.setTileImage(leftLoc3, enemy3);
-        System.out.println("Moving Enderman");
+
+        GridLocation leftLoc = new GridLocation(r, c-1);
+
+        //CHECK IF EMAN IS ABOUT TO HIT STEVE
+        if(steve.equals(level1Grid.getTileImage(leftLoc))){
+
+
+
+        }
+
+        //if not,add eman to loc to left
+        else{
+          level1Grid.setTileImage(leftLoc, enemy);
+          //System.out.println("Moving Enderman");
         }
       }
     }
   }
 }
 
-//Method to check if there is a collision between Sprites on the Screen
-public boolean checkCollision(){
-
-  //Level 1 Collisions
-  
-  
-  //Level 2 collisions
-  
-  
-  //Level 3 Collisions
-
-  
-  return false; //<--default return
-}
 
 //method to indicate when the main game is over
 public boolean isLevelOver(){
